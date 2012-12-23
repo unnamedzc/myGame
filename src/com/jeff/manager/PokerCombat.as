@@ -51,6 +51,7 @@ package com.jeff.manager
 					//JET_CANON
 					//STRAIGHT
 					//FOUR_OF_KIND
+					break;
 			}
 			
 			return BAD_STYLE
@@ -59,7 +60,7 @@ package com.jeff.manager
 		{
 			_choosedCards=Vector.<uint>([1,1,1,2,2,2,3,3,4,4]);
 		}
-		public static function JudgeIfStraight():Boolean
+		public static function JudgeIfStraight(_choosedCards:Vector):Boolean
 		{
 			var _len:uint=_choosedCards.length;
 			var _tempUint:uint=_choosedCards[0];			
@@ -77,7 +78,7 @@ package com.jeff.manager
 		{
 			var _len:uint=_choosedCards.length;
 			//11122;
-			if(_len==5||_choosedCards[0]==_choosedCards[1]&&_choosedCards[2]==_choosedCards[1]&&_choosedCards[3]==_choosedCards[4]&&_choosedCards[3]!=_choosedCards[0])
+			if(_len==5&&_choosedCards[0]==_choosedCards[1]&&_choosedCards[2]==_choosedCards[1]&&_choosedCards[3]==_choosedCards[4]&&_choosedCards[3]!=_choosedCards[0])
 			{
 				return true;
 			}else
@@ -111,7 +112,6 @@ package com.jeff.manager
 				DeBug.LOG("is not 3 cards")
 				return false;
 			}
-			//var _tempUint:uint=_choosedCards[0];
 			for(var i:uint=0;i<_len;i+=3)
 			{
 				if(_choosedCards[i]!=_choosedCards[i+1]||_choosedCards[i]!=_choosedCards[i+2])

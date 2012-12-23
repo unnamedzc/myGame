@@ -14,5 +14,6 @@ bin-debug
 *.txt
 .svn
 *.ko
+.settings
 modules.builtin
 piggy.gzip

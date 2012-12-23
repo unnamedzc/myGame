@@ -85,8 +85,7 @@ package com.containers
 		}
 		
 		public function resetMultiNum():void
-		{
-			
+		{		
 			_myMulti.text=GlobalValue._mutilVec[0];
 			_playerMulti1.text=GlobalValue._mutilVec[1];
 			_playerMulti2.text=GlobalValue._mutilVec[2];

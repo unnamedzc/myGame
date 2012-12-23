@@ -25,6 +25,11 @@ package com.jeff.data
 			}
 		}
 		//end function
+		public static function _pushToCard($card:uint):void
+		{
+			_MyChoosedCards.push($card);
+		}
+		//end function
 		public static function _sortChoosedPoker():void
 		{
 			

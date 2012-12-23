@@ -56,7 +56,7 @@ package com.poker
 			if(_text.text.length==9)
 				_text.height=95;
 			
-			_text.dispose();			
+			_text.dispose();
 			
 		}
 		//end function
@@ -77,9 +77,9 @@ package com.poker
 						PlayerData._popFromCard(_id);
 					}else{
 						greenBlock.color=0x0000ff;
-						PlayerData._MyChoosedCards.push(_id);
+						PlayerData._pushToCard(_id);
 					}
-						//trace(GlobalValue._idToNum(_id));	
+						//trace(_id,GlobalValue._idToNum(_id));	
 					if(_selected==true)
 					{
 						GlobalValue._HUDContainer.showHUDButtonGo();
