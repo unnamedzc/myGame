@@ -66,6 +66,7 @@ package com.poker
 			if(e.getTouch(stage).phase=="ended")
 			{
 				//DeBug.LOG(Pokers(e.currentTarget)._myNum)
+				DeBug.LOG("this ID is:",_id)
 				if(GlobalValue._GameStarted){
 					_selected=!_selected;
 					
@@ -74,12 +75,12 @@ package com.poker
 					if(!_selected)
 					{
 						greenBlock.color=0xffffff;
-						PlayerData._popFromCard(_id);
+						PlayerData._popFromCard(GlobalValue._idToNum(_id));
 					}else{
 						greenBlock.color=0x0000ff;
-						PlayerData._pushToCard(_id);
+						PlayerData._pushToCard(GlobalValue._idToNum(_id));
 					}
-						//trace(_id,GlobalValue._idToNum(_id));	
+						trace(_id,"::",PlayerData._MyChoosedCards);	
 					if(_selected==true)
 					{
 						GlobalValue._HUDContainer.showHUDButtonGo();

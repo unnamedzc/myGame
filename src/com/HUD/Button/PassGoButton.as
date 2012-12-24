@@ -2,6 +2,7 @@ package com.HUD.Button
 {
 	
 	import com.jeff.data.PlayerData;
+	import com.jeff.manager.PokerCombat;
 	
 	import starling.display.Button;
 	import starling.events.TouchEvent;
@@ -23,10 +24,13 @@ package com.HUD.Button
 			{
 				
 				//trace("go")
-				trace(PlayerData._MyChoosedCards)
+				//trace(PlayerData._MyChoosedCards);
 				//sort PlayerData._MyChoosedCards and judge type;
 				GlobalValue.sortVector(PlayerData._MyChoosedCards)
-					trace(PlayerData._MyChoosedCards)
+				PokerCombat._choosedCards=PlayerData._MyChoosedCards;
+				trace(PokerCombat._choosedCards,"LL",PlayerData._MyChoosedCards);
+				//judge
+				trace(PokerCombat.PokerStyleJudge())
 			}			
 		}
 		//end function

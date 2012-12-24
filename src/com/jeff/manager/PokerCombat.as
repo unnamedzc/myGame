@@ -36,7 +36,9 @@ package com.jeff.manager
 						return FOUR_OF_KIND;
 					//FOUR_OF_KIND
 					break;
-				case 5:					
+				case 5:
+					if(_choosedCards[0]+1==_choosedCards[1]&&_choosedCards[1]+1==_choosedCards[2]&&_choosedCards[2]+1==_choosedCards[3]&&_choosedCards[3]+1==_choosedCards[4])		
+					return _STRAIGHT;
 					//_STRAIGHT
 					break;
 				case 6:
@@ -63,12 +65,26 @@ package com.jeff.manager
 		public static function JudgeIfStraight(_choosedCards:Vector):Boolean
 		{
 			var _len:uint=_choosedCards.length;
-			var _tempUint:uint=_choosedCards[0];			
-			for(var i:uint=1;i<_len;++i)
+			var _tempUint:uint=_choosedCards[0];
+			var i:uint;
+			if(_choosedCards[_len-1]==14&&_choosedCards[0]==2)	
 			{
-				if(_choosedCards[i-1]!=_choosedCards[i]+1)
+				for(i=2;i<_len-1;++i)
 				{
-					return false;
+					if(_choosedCards[i-1]!=_choosedCards[i]+1)
+					{
+						return false;
+					}
+				}
+			}
+			else
+			{
+				for(i=1;i<_len;++i)
+				{
+					if(_choosedCards[i-1]!=_choosedCards[i]+1)
+					{
+						return false;
+					}
 				}
 			}
 			

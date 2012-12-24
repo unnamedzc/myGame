@@ -19,7 +19,7 @@ package com.jeff.data
 			{
 				if(_MyChoosedCards[i]==$card)
 				{
-					_MyChoosedCards.splice(i-1,1);
+					_MyChoosedCards.splice(i,1);
 					break;
 				}
 			}

@@ -50,13 +50,14 @@ package
 		{
 			var _tempNum:uint;
 			if($id>=0&&$id<=1){
-				_tempNum=15
+				_tempNum=16
 			}else if($id>=2&&$id<=3){
-				_tempNum=14
+				_tempNum=15
 			}else if($id>=4&&$id<=11){
 				_tempNum=2
 			}else if($id>=12&&$id<=19){
-				_tempNum=1
+				//A
+				_tempNum=14
 			}else if($id>=20&&$id<=27){
 				_tempNum=13
 			}else if($id>=28&&$id<=35){
