@@ -6,7 +6,8 @@ package com.jeff.data
 		public static var _MyPokerVector:Vector.<uint>;
 	//	public static var _MyPokerNumVec:Vector.<uint>;
 		public static var _MyRole:uint;//0,1,2
-		public static var _MyChoosedCards:Vector.<uint>=new Vector.<uint>;
+		
+		public static var _MyChoosedCards:Vector.<uint>=new Vector.<uint>;//store choosed Poker ID
 		public static function _sequencePoke():void{
 			GlobalValue.sortVector(_MyPokerVector);
 			

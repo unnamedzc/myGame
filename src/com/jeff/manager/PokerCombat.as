@@ -57,10 +57,17 @@ package com.jeff.manager
 					break;
 				case 5:
 					if(_choosedCards[0]+1==_choosedCards[1]&&_choosedCards[1]+1==_choosedCards[2]&&_choosedCards[2]+1==_choosedCards[3]&&_choosedCards[3]+1==_choosedCards[4])		
-					return _STRAIGHT;
+						return _STRAIGHT;
 					//_STRAIGHT
+					else if(_choosedCards[0]==_choosedCards[1]&&_choosedCards[1]==_choosedCards[2]&&_choosedCards[0]!=_choosedCards[3]&&_choosedCards[4]==_choosedCards[3]||_choosedCards[0]==_choosedCards[1]&&_choosedCards[1]!=_choosedCards[2]&&_choosedCards[2]==_choosedCards[3]&&_choosedCards[4]==_choosedCards[3])
+						return FULL_HOUSE;
+					
+					//fullhouse
 					break;
 				case 6:
+					if(_choosedCards[0]==_choosedCards[1]&&_choosedCards[1]==_choosedCards[2]&&(_choosedCards[0]==_choosedCards[3]+1||_choosedCards[0]==_choosedCards[3]-1)&&_choosedCards[4]==_choosedCards[3]&&_choosedCards[4]==_choosedCards[5])
+					
+						return JET;
 					//JET
 					//3TRIPLE_PAIR
 					break;
