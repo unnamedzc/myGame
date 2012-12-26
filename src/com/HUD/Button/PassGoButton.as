@@ -23,11 +23,11 @@ package com.HUD.Button
 			if(e.getTouch(stage).phase=="ended")
 			{
 				
-				//trace("go")
+				
 				//trace(PlayerData._MyChoosedCards);
 				//sort PlayerData._MyChoosedCards and judge type;
 				GlobalValue.sortVector(PlayerData._MyChoosedCards)
-				PokerCombat._choosedCards=PlayerData._MyChoosedCards;
+				//PokerCombat._choosedCards=PlayerData._MyChoosedCards;
 				trace(PokerCombat._choosedCards,"LL",PlayerData._MyChoosedCards);
 				//judge
 				trace(PokerCombat.PokerStyleJudge())

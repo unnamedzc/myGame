@@ -3,6 +3,8 @@ package com.poker
 	//import starling.display.Image;
 	
 	import com.jeff.data.PlayerData;
+	import com.jeff.manager.PokerCombat;
+	import com.jeff.manager.PokerPool;
 	
 	import starling.display.Image;
 	import starling.display.Sprite;
@@ -66,7 +68,7 @@ package com.poker
 			if(e.getTouch(stage).phase=="ended")
 			{
 				//DeBug.LOG(Pokers(e.currentTarget)._myNum)
-				DeBug.LOG("this ID is:",_id)
+				DeBug.LOG("this ID is:",_id,this==PokerPool.getPokerObject(_id))
 				if(GlobalValue._GameStarted){
 					_selected=!_selected;
 					
@@ -75,12 +77,13 @@ package com.poker
 					if(!_selected)
 					{
 						greenBlock.color=0xffffff;
-						PlayerData._popFromCard(GlobalValue._idToNum(_id));
+						PokerCombat._popFromCard(GlobalValue._idToNum(_id));
+						PlayerData._popFromCard(_id);
 					}else{
 						greenBlock.color=0x0000ff;
-						PlayerData._pushToCard(GlobalValue._idToNum(_id));
-					}
-						trace(_id,"::",PlayerData._MyChoosedCards);	
+						PokerCombat._pushToCard(GlobalValue._idToNum(_id));
+						PlayerData._pushToCard(_id);
+					}						
 					if(_selected==true)
 					{
 						GlobalValue._HUDContainer.showHUDButtonGo();

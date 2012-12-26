@@ -14,6 +14,25 @@ package com.jeff.manager
 		public static const TRIPLE_PAIR:String="triplepair";
 		public static const BAD_STYLE:String='bad style;';
 		public static var _choosedCards:Vector.<uint>=new Vector.<uint>;
+		//end function
+		public static function _popFromCard($card:uint):void
+		{
+			var _len:uint=_choosedCards.length;
+			for (var i:uint=0;i<_len;i++)
+			{
+				if(_choosedCards[i]==$card)
+				{
+					_choosedCards.splice(i,1);
+					break;
+				}
+			}
+		}
+		//end function
+		public static function _pushToCard($card:uint):void
+		{
+			_choosedCards.push($card);
+		}
+		//judges
 		public static function PokerStyleJudge():String
 		{
 			
