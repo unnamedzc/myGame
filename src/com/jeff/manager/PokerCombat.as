@@ -11,6 +11,7 @@ package com.jeff.manager
 		public static const PAIR:String="pair"//11
 		public static const JET:String="jet"//111222
 		public static const JET_CANON:String="jetcannon"//1112223344
+		public static const _CANON:String="cannon"//11223344
 		public static const TRIPLE_PAIR:String="triplepair";
 		public static const BAD_STYLE:String='bad style;';
 		public static var _choosedCards:Vector.<uint>=new Vector.<uint>;
@@ -56,48 +57,73 @@ package com.jeff.manager
 					//FOUR_OF_KIND
 					break;
 				case 5:
-					if(_choosedCards[0]+1==_choosedCards[1]&&_choosedCards[1]+1==_choosedCards[2]&&_choosedCards[2]+1==_choosedCards[3]&&_choosedCards[3]+1==_choosedCards[4])		
+					
+					//_STRAIGHT not judge here
+					if(JudgeIfLongStraight())
+					{
 						return _STRAIGHT;
-					//_STRAIGHT
-					else if(_choosedCards[0]==_choosedCards[1]&&_choosedCards[1]==_choosedCards[2]&&_choosedCards[0]!=_choosedCards[3]&&_choosedCards[4]==_choosedCards[3]||_choosedCards[0]==_choosedCards[1]&&_choosedCards[1]!=_choosedCards[2]&&_choosedCards[2]==_choosedCards[3]&&_choosedCards[4]==_choosedCards[3])
+					}else if(_choosedCards[0]==_choosedCards[1]&&_choosedCards[1]==_choosedCards[2]&&_choosedCards[0]!=_choosedCards[3]&&_choosedCards[4]==_choosedCards[3]||_choosedCards[0]==_choosedCards[1]&&_choosedCards[1]!=_choosedCards[2]&&_choosedCards[2]==_choosedCards[3]&&_choosedCards[4]==_choosedCards[3])
+					{
 						return FULL_HOUSE;
+					}
 					
 					//fullhouse
 					break;
 				case 6:
-					if(_choosedCards[0]==_choosedCards[1]&&_choosedCards[1]==_choosedCards[2]&&(_choosedCards[0]==_choosedCards[3]+1||_choosedCards[0]==_choosedCards[3]-1)&&_choosedCards[4]==_choosedCards[3]&&_choosedCards[4]==_choosedCards[5])
-					
+					if(JudgeIfLongJet())					
 						return JET;
+					else if(judgeIfLongCanon())
+						return _CANON;
+					else if(JudgeIfLongStraight())
+						return _STRAIGHT;
 					//JET
 					//3TRIPLE_PAIR
 					break;
-				case 10:
+				/*case 10:
+					if(_choosedCards[0]==_choosedCards[1]&&_choosedCards[1]==_choosedCards[2])
+						return JET_CANON;
 					//JET_CANON
-					break;
+					break;*/
 				default:
+					
 					//JET
 					//JET_CANON
 					//STRAIGHT
 					//FOUR_OF_KIND
+					if(JudgeIfLongStraight())
+					{
+						return _STRAIGHT;
+					}else if(JudgeIfLongSame())
+					{
+						return FOUR_OF_KIND;
+					}else if(JudgeIfLongJet())
+					{
+						return JET;
+					}else if(JudgeIfLongJetCanon())
+					{
+						return JET_CANON;
+					}else if(judgeIfLongCanon())
+					{
+						return _CANON;
+					}
 					break;
 			}
 			
 			return BAD_STYLE
-		}
+		}		
 		public static function _testCards():void
 		{
 			_choosedCards=Vector.<uint>([1,1,1,2,2,2,3,3,4,4]);
 		}
-		public static function JudgeIfStraight(_choosedCards:Vector):Boolean
+		private static function JudgeIfLongStraight():Boolean
 		{
 			var _len:uint=_choosedCards.length;
-			var _tempUint:uint=_choosedCards[0];
 			var i:uint;
-			if(_choosedCards[_len-1]==14&&_choosedCards[0]==2)	
+			if(_choosedCards[_len-2]==14&&_choosedCards[_len-1]==2&&_choosedCards[0]==3)	
 			{
-				for(i=2;i<_len-1;++i)
+				for(i=1;i<_len-2;++i)
 				{
-					if(_choosedCards[i-1]!=_choosedCards[i]+1)
+					if(_choosedCards[i-1]!=_choosedCards[i]-1)
 					{
 						return false;
 					}
@@ -107,7 +133,7 @@ package com.jeff.manager
 			{
 				for(i=1;i<_len;++i)
 				{
-					if(_choosedCards[i-1]!=_choosedCards[i]+1)
+					if(_choosedCards[i-1]!=_choosedCards[i]-1)
 					{
 						return false;
 					}
@@ -116,7 +142,7 @@ package com.jeff.manager
 			
 			return true;
 		}
-		public static function JudgeIfFullHouse():Boolean
+		private static function JudgeIfFullHouse():Boolean
 		{
 			var _len:uint=_choosedCards.length;
 			//11122;
@@ -128,7 +154,7 @@ package com.jeff.manager
 				return false;
 			}
 		}
-		public static function JudgeIfSame():uint
+		private static function JudgeIfLongSame():uint
 		{
 			var _len:uint=_choosedCards.length;
 			if(_len==1){
@@ -146,7 +172,7 @@ package com.jeff.manager
 			}
 			return _len;
 		}
-		public static function JudgeIfJet():Boolean
+		private static function JudgeIfLongJet():Boolean
 		{
 			DeBug.LOG("Judge jet")
 			var _len:uint=_choosedCards.length;
@@ -154,6 +180,7 @@ package com.jeff.manager
 				DeBug.LOG("is not 3 cards")
 				return false;
 			}
+			dealWithA(3,_len-1);
 			for(var i:uint=0;i<_len;i+=3)
 			{
 				if(_choosedCards[i]!=_choosedCards[i+1]||_choosedCards[i]!=_choosedCards[i+2])
@@ -173,13 +200,38 @@ package com.jeff.manager
 			}
 			return true;			
 		}
-		public static function JudgeIfJetCanon():Boolean
+		private static function judgeIfLongCanon():Boolean
+		{
+			DeBug.LOG("Judge canon")
+			var _len:uint=_choosedCards.length;
+			if(_len%2!=0||_len<4){
+				return false;
+			}			
+			for(var i:uint=0;i<_len;i+=2)
+			{
+				if(_choosedCards[i]!=_choosedCards[i+1])
+				{
+					return false;
+					break;
+				}else if(i+2<_len)
+				{
+					if(_choosedCards[i+1]+1!=_choosedCards[i+2])
+					{
+						return false;
+						break;
+					}
+				}
+			}
+			return true;
+		}
+		private static function JudgeIfLongJetCanon():Boolean
 		{
 			DeBug.LOG("Judge jet canon")
 			var _len:uint=_choosedCards.length;
 			if(_len%5!=0){
 				return false;
 			}
+			//jet first then cannon
 			var _len1:uint=_len/5*3;
 			for(var i:uint=0;i<_len1;i+=3)
 			{
@@ -187,6 +239,7 @@ package com.jeff.manager
 				{
 					//112
 					return false;
+					break;
 				}else if(i+3<_len)
 				{
 					if(_choosedCards[i]+1!=_choosedCards[i+3])
@@ -194,6 +247,7 @@ package com.jeff.manager
 						//111333
 						DeBug.LOG("2 pairs is not same")
 						return false;
+						break;
 					}
 				}
 			}
@@ -209,6 +263,20 @@ package com.jeff.manager
 		}
 		public static function PokerCombatJudge():void{
 			
+		}
+		//deal with A
+		private static function dealWithA($num:uint,$len:uint):void
+		{
+			/*if(_choosedCards[0]==1&&_choosedCards[$len]==13)
+			{
+				for(var i:uint=0;i<$num;++i)
+				{
+					_choosedCards[i]=14;
+				}
+				GlobalValue.sortVector(_choosedCards);
+			}*/
+			trace(_choosedCards);
+			//return true
 		}
 	}
 }

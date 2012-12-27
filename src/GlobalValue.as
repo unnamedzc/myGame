@@ -57,7 +57,7 @@ package
 				_tempNum=2
 			}else if($id>=12&&$id<=19){
 				//A
-				_tempNum=14
+				_tempNum=1
 			}else if($id>=20&&$id<=27){
 				_tempNum=13
 			}else if($id>=28&&$id<=35){

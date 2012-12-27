@@ -26,7 +26,8 @@ package com.HUD.Button
 				
 				//trace(PlayerData._MyChoosedCards);
 				//sort PlayerData._MyChoosedCards and judge type;
-				GlobalValue.sortVector(PlayerData._MyChoosedCards)
+				//GlobalValue.sortVector(PlayerData._MyChoosedCards)
+				GlobalValue.sortVector(PokerCombat._choosedCards)
 				//PokerCombat._choosedCards=PlayerData._MyChoosedCards;
 				trace(PokerCombat._choosedCards,"LL",PlayerData._MyChoosedCards);
 				//judge
