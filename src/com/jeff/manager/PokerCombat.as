@@ -275,6 +275,14 @@ package com.jeff.manager
 				}
 				GlobalValue.sortVector(_choosedCards);
 			}*/
+			if(_choosedCards[0]==1&&_choosedCards[$len]==13)
+			{
+				trace("13A")
+			}
+			else if(_choosedCards[0]==1&&_choosedCards[$num]==2)
+			{
+				trace("A2")
+			}
 			trace(_choosedCards);
 			//return true
 		}
