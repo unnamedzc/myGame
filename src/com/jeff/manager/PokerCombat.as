@@ -15,7 +15,9 @@ package com.jeff.manager
 		public static const TRIPLE_PAIR:String="triplepair";
 		public static const BAD_STYLE:String='bad style;';
 		public static var _choosedCards:Vector.<uint>=new Vector.<uint>;
-		//end function
+		//About A
+		private static var _aboutA:String;
+		//
 		public static function _popFromCard($card:uint):void
 		{
 			var _len:uint=_choosedCards.length;
