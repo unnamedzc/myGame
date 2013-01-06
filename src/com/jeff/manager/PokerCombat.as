@@ -17,6 +17,8 @@ package com.jeff.manager
 		public static var _choosedCards:Vector.<uint>=new Vector.<uint>;
 		//About A
 		private static var _aboutA:String;
+		//jetcannonMode
+		private static var _jetCannonMode:String;
 		//
 		public static function _popFromCard($card:uint):void
 		{
@@ -121,26 +123,15 @@ package com.jeff.manager
 		{
 			var _len:uint=_choosedCards.length;
 			var i:uint;
-			if(_choosedCards[_len-2]==14&&_choosedCards[_len-1]==2&&_choosedCards[0]==3)	
+			dealWithA(1,_len-1);
+			for(i=1;i<_len;++i)
 			{
-				for(i=1;i<_len-2;++i)
+				if(_choosedCards[i-1]!=_choosedCards[i]-1)
 				{
-					if(_choosedCards[i-1]!=_choosedCards[i]-1)
-					{
-						return false;
-					}
+					return false;
 				}
 			}
-			else
-			{
-				for(i=1;i<_len;++i)
-				{
-					if(_choosedCards[i-1]!=_choosedCards[i]-1)
-					{
-						return false;
-					}
-				}
-			}
+			
 			
 			return true;
 		}
@@ -149,6 +140,9 @@ package com.jeff.manager
 			var _len:uint=_choosedCards.length;
 			//11122;
 			if(_len==5&&_choosedCards[0]==_choosedCards[1]&&_choosedCards[2]==_choosedCards[1]&&_choosedCards[3]==_choosedCards[4]&&_choosedCards[3]!=_choosedCards[0])
+			{
+				return true;
+			}else if(_len==5&&_choosedCards[0]==_choosedCards[1]&&_choosedCards[2]==_choosedCards[3]&&_choosedCards[3]==_choosedCards[4]&&_choosedCards[3]!=_choosedCards[0])
 			{
 				return true;
 			}else
@@ -208,7 +202,8 @@ package com.jeff.manager
 			var _len:uint=_choosedCards.length;
 			if(_len%2!=0||_len<4){
 				return false;
-			}			
+			}
+			dealWithA(2,_len-1);
 			for(var i:uint=0;i<_len;i+=2)
 			{
 				if(_choosedCards[i]!=_choosedCards[i+1])
@@ -233,8 +228,19 @@ package com.jeff.manager
 			if(_len%5!=0){
 				return false;
 			}
+			
 			//jet first then cannon
 			var _len1:uint=_len/5*3;
+			dealWithA(3,_len1-1);
+			//13Amode
+			if(_aboutA=="13A")
+			{
+				
+			}else
+			{
+				judgeJetCannonMode();
+			}
+			//skipA2mode
 			for(var i:uint=0;i<_len1;i+=3)
 			{
 				if(_choosedCards[i]!=_choosedCards[i+1]||_choosedCards[i]!=_choosedCards[i+2])
@@ -263,30 +269,29 @@ package com.jeff.manager
 			}
 			return true;
 		}
+		
+		private static function judgeJetCannonMode():void
+		{
+			
+			
+		}
 		public static function PokerCombatJudge():void{
 			
 		}
 		//deal with A
 		private static function dealWithA($num:uint,$len:uint):void
-		{
-			/*if(_choosedCards[0]==1&&_choosedCards[$len]==13)
-			{
-				for(var i:uint=0;i<$num;++i)
-				{
-					_choosedCards[i]=14;
-				}
-				GlobalValue.sortVector(_choosedCards);
-			}*/
+		{			
 			if(_choosedCards[0]==1&&_choosedCards[$len]==13)
 			{
-				trace("13A")
+				_aboutA="13A"
+				trace(_aboutA)
 			}
 			else if(_choosedCards[0]==1&&_choosedCards[$num]==2)
 			{
-				trace("A2")
+				_aboutA="A2"
+				trace(_aboutA)
 			}
 			trace(_choosedCards);
-			//return true
 		}
 	}
 }
