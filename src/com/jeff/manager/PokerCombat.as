@@ -18,7 +18,7 @@ package com.jeff.manager
 		//About A
 		private static var _aboutA:String;//13A,A2
 		//jetcannonMode
-		private static var _jetCannonMode:String;//32,23,no		
+		private static var _jetCannonMode:String;//32,23,no
 		//
 		public static function _popFromCard($card:uint):void
 		{
@@ -40,7 +40,6 @@ package com.jeff.manager
 		//judges
 		public static function PokerStyleJudge():String
 		{
-			
 			var _len:uint=_choosedCards.length;
 			var _tempUint:uint=_choosedCards[0];
 			var _styleNUm:uint=1;
@@ -72,7 +71,7 @@ package com.jeff.manager
 					//fullhouse
 					break;
 				case 6:
-					if(JudgeIfLongJet())					
+					if(JudgeIfLongJet())
 						return JET;
 					else if(judgeIfLongCanon())
 						return _CANON;
@@ -81,13 +80,7 @@ package com.jeff.manager
 					//JET
 					//3TRIPLE_PAIR
 					break;
-				/*case 10:
-					if(_choosedCards[0]==_choosedCards[1]&&_choosedCards[1]==_choosedCards[2])
-						return JET_CANON;
-					//JET_CANON
-					break;*/
 				default:
-					
 					//JET
 					//JET_CANON
 					//STRAIGHT
@@ -110,9 +103,8 @@ package com.jeff.manager
 					}
 					break;
 			}
-			
 			return BAD_STYLE
-		}		
+		}
 		public static function _testCards():void
 		{
 			_choosedCards=Vector.<uint>([1,1,1,2,2,2,3,3,4,4]);
@@ -231,13 +223,20 @@ package com.jeff.manager
 			//jet first then cannon
 			
 			dealWithA(3,_len);
+			
 			judgeJetCannonMode();
 			//13Amode
 			if(_aboutA=="13A")
 			{
-				//for AAA skip 3-n 223344 then qqqkkk
+				//for AAA skip 3-n 223344 then qqqkkk TODO
+				if(_choosedCards[0]!=1||_choosedCards[1]!=1||_choosedCards[2]!=1)
+					return false;
+				else if(_choosedCards[_len-1]!=13||_choosedCards[_len-2]!=1||_choosedCards[_len-3]!=1)
+					return false;
+				//toDo for 
 			}else
-			{//skipA2mode
+			{
+				//skipA2mode
 				if(_jetCannonMode=="32")
 				{
 					var _len1:uint=_len/5*3;
