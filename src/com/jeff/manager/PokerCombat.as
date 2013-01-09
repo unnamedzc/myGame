@@ -16,9 +16,9 @@ package com.jeff.manager
 		public static const BAD_STYLE:String='bad style;';
 		public static var _choosedCards:Vector.<uint>=new Vector.<uint>;
 		//About A
-		private static var _aboutA:String;
+		private static var _aboutA:String;//13A,A2
 		//jetcannonMode
-		private static var _jetCannonMode:String;
+		private static var _jetCannonMode:String;//32,23,no		
 		//
 		public static function _popFromCard($card:uint):void
 		{
@@ -61,7 +61,6 @@ package com.jeff.manager
 					//FOUR_OF_KIND
 					break;
 				case 5:
-					
 					//_STRAIGHT not judge here
 					if(JudgeIfLongStraight())
 					{
@@ -69,8 +68,7 @@ package com.jeff.manager
 					}else if(_choosedCards[0]==_choosedCards[1]&&_choosedCards[1]==_choosedCards[2]&&_choosedCards[0]!=_choosedCards[3]&&_choosedCards[4]==_choosedCards[3]||_choosedCards[0]==_choosedCards[1]&&_choosedCards[1]!=_choosedCards[2]&&_choosedCards[2]==_choosedCards[3]&&_choosedCards[4]==_choosedCards[3])
 					{
 						return FULL_HOUSE;
-					}
-					
+					}					
 					//fullhouse
 					break;
 				case 6:
@@ -130,9 +128,7 @@ package com.jeff.manager
 				{
 					return false;
 				}
-			}
-			
-			
+			}		
 			return true;
 		}
 		private static function JudgeIfFullHouse():Boolean
@@ -221,6 +217,9 @@ package com.jeff.manager
 			}
 			return true;
 		}
+		/**
+		 * the most complecated thing
+		 * */
 		private static function JudgeIfLongJetCanon():Boolean
 		{
 			DeBug.LOG("Judge jet canon")
@@ -230,41 +229,75 @@ package com.jeff.manager
 			}
 			
 			//jet first then cannon
-			var _len1:uint=_len/5*3;
-			dealWithA(3,_len1-1);
+			
+			dealWithA(3,_len);
+			judgeJetCannonMode();
 			//13Amode
 			if(_aboutA=="13A")
 			{
-				
+				//for AAA skip 3-n 223344 then qqqkkk
 			}else
-			{
-				judgeJetCannonMode();
-			}
-			//skipA2mode
-			for(var i:uint=0;i<_len1;i+=3)
-			{
-				if(_choosedCards[i]!=_choosedCards[i+1]||_choosedCards[i]!=_choosedCards[i+2])
+			{//skipA2mode
+				if(_jetCannonMode=="32")
 				{
-					//112
-					return false;
-					break;
-				}else if(i+3<_len)
-				{
-					if(_choosedCards[i]+1!=_choosedCards[i+3])
+					var _len1:uint=_len/5*3;
+					for(var i:uint=0;i<_len1;i+=3)
 					{
-						//111333
-						DeBug.LOG("2 pairs is not same")
-						return false;
-						break;
+						if(_choosedCards[i]!=_choosedCards[i+1]||_choosedCards[i]!=_choosedCards[i+2])
+						{
+							//112
+							return false;
+							break;
+						}else if(i+3<_len)
+						{
+							if(_choosedCards[i]+1!=_choosedCards[i+3])
+							{
+								//111333
+								DeBug.LOG("2 pairs is not same")
+								return false;
+								break;
+							}
+						}
+					}
+					for(i=_len1;i<_len;i+=2)
+					{
+						if(_choosedCards[i]!=_choosedCards[i+1])
+						{
+							//12
+							return false;
+						}
 					}
 				}
-			}
-			for(i=_len1;i<_len;i+=2)
-			{
-				if(_choosedCards[i]!=_choosedCards[i+1])
+				else if(_jetCannonMode=="23")
 				{
-					//112
-					return false;
+					//TODO
+					var _len2:uint=_len/5*2;
+					for(i=0;i<_len2;i+=2)
+					{
+						if(_choosedCards[i]!=_choosedCards[i+1])
+						{
+							//12
+							return false;
+							break;
+						}
+					}
+					for(i=_len2;i<_len;i+=3)
+					{
+						if(_choosedCards[i]!=_choosedCards[i+1]||_choosedCards[i]!=_choosedCards[i+2])
+						{
+							//112
+							return false;
+						}else if(i+3<_len)
+						{
+							if(_choosedCards[i]+1!=_choosedCards[i+3])
+							{
+								//111333
+								DeBug.LOG("2 pairs is not same")
+								return false;
+								break;
+							}
+						}
+					}
 				}
 			}
 			return true;
@@ -272,8 +305,32 @@ package com.jeff.manager
 		
 		private static function judgeJetCannonMode():void
 		{
-			
-			
+			//_jetCannonMode
+			var _len:uint=_choosedCards.length;
+			var _len1:uint=_len/5*3;
+			for(var i:uint=0;i<_len1;i+=3)
+			{
+				if(_choosedCards[i]==_choosedCards[i+1]&&_choosedCards[i]==_choosedCards[i+2])
+				{
+					_jetCannonMode="32";					
+				}else
+				{
+					_jetCannonMode="no";
+					break;
+				}
+			}
+			var _len2:uint=_len/5*2;
+			for(i=0;i<_len2;i+=2)
+			{
+				if(_choosedCards[i]==_choosedCards[i+1])
+				{
+					_jetCannonMode="23";					
+				}else
+				{
+					_jetCannonMode="no";
+					break;
+				}
+			}
 		}
 		public static function PokerCombatJudge():void{
 			
@@ -283,15 +340,18 @@ package com.jeff.manager
 		{			
 			if(_choosedCards[0]==1&&_choosedCards[$len]==13)
 			{
-				_aboutA="13A"
-				trace(_aboutA)
+				_aboutA="13A";
+				
 			}
 			else if(_choosedCards[0]==1&&_choosedCards[$num]==2)
 			{
-				_aboutA="A2"
-				trace(_aboutA)
+				_aboutA="A2";
+				
+			}else 
+			{
+				_aboutA="noA"
 			}
-			trace(_choosedCards);
+			DeBug.LOG("dealWithA's result is:",_aboutA)
 		}
 	}
 }
